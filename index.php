@@ -15,9 +15,9 @@ session_unset();
     <div class="container">
         <h1 class="game-title">Snakes & Ladders</h1>
         <div class="main-menu">
-            <a href="start_game.php" class="btn">🎮 Start Game</a>
-            <a href="settings.php" class="btn">⚙️ Settings</a>
-            <a href="instructions.php" class="btn">📖 Instructions</a>
+            <a href="start_game.php" class="btn btn-start">🎮 Start Game</a>
+            <a href="settings.php" class="btn btn-settings">⚙️ Settings</a>
+            <a href="instructions.php" class="btn btn-instructions">📖 Instructions</a>
         </div>
     </div>
 </body>
