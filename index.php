@@ -13,7 +13,7 @@ session_unset();
 </head>
 <body>
     <div class="container">
-        <h1 class="game-title">🎲 Snakes & Ladders 🎲</h1>
+        <h1 class="game-title">Snakes & Ladders</h1>
         <div class="main-menu">
             <a href="start_game.php" class="btn">🎮 Start Game</a>
             <a href="settings.php" class="btn">⚙️ Settings</a>
