@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 if (!isset($_SESSION['difficulty']) || !isset($_SESSION['player_count'])) {
     header('Location: index.php');
     exit;
@@ -28,6 +29,57 @@ class SnakesAndLadders {
         $this->setupBoard($difficulty);
     }
     
+    private function setupBoard($difficulty) {
+        switch($difficulty) {
+            case 'easy':
+                $this->snakesAndLadders = [
+                    // Ladders (start => end)
+                    4 => 14,   // Small ladder
+                    9 => 31,   // Medium ladder
+                    20 => 38,  // Medium ladder
+                    28 => 84,  // Large ladder
+                    40 => 59,  // Medium ladder
+                    // Snakes (start => end)
+                    17 => 7,   // Small snake
+                    54 => 34,  // Medium snake
+                    62 => 19,  // Large snake
+                    64 => 60   // Small snake
+                ];
+                break;
+            case 'medium':
+                $this->snakesAndLadders = [
+                    // More balanced snakes and ladders
+                    8 => 30,   // Ladder
+                    21 => 42,  // Ladder
+                    28 => 76,  // Ladder
+                    50 => 67,  // Ladder
+                    71 => 92,  // Ladder
+                    // Snakes
+                    32 => 10,  // Snake
+                    48 => 26,  // Snake
+                    56 => 53,  // Snake
+                    88 => 24,  // Snake
+                    95 => 75   // Snake
+                ];
+                break;
+            case 'hard':
+                $this->snakesAndLadders = [
+                    // Fewer ladders, more snakes
+                    4 => 14,   // Ladder
+                    13 => 31,  // Ladder
+                    33 => 85,  // Ladder
+                    // Many snakes
+                    98 => 8,   // Large snake
+                    92 => 41,  // Large snake
+                    75 => 28,  // Medium snake
+                    47 => 16,  // Medium snake
+                    36 => 6,   // Medium snake
+                    29 => 9,   // Small snake
+                    55 => 31   // Small snake
+                ];
+                break;
+        }
+    }
     public function rollDice() {
         if ($this->gameOver) return;
         
@@ -65,7 +117,7 @@ class SnakesAndLadders {
         
         $this->nextTurn();
     }
-    
+
     private function nextTurn() {
         $this->currentPlayer = ($this->currentPlayer + 1) % count($this->players);
         if (!$this->gameOver) {
@@ -90,13 +142,9 @@ class SnakesAndLadders {
     public function isGameOver() { return $this->gameOver; }
     public function getLastRoll() { return $this->lastRoll; }
     public function getSnakesAndLadders() { return $this->snakesAndLadders; }
-    
-    private function setupBoard($difficulty) {
-        // Keep your existing setupBoard code here
-    }
 }
 
-// Initialize new game or get existing game
+// Initialize new game
 if (!isset($_SESSION['game']) || isset($_POST['new_game'])) {
     $_SESSION['game'] = new SnakesAndLadders(
         $_SESSION['player_count'],
@@ -117,7 +165,6 @@ if (isset($_POST['new_game'])) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,7 +231,6 @@ if (isset($_POST['new_game'])) {
                     }
                 }
                 
-                // Add player tokens
                 foreach ($_SESSION['game']->getPlayers() as $player) {
                     if ($player['position'] === $i) {
                         $isCurrentPlayer = $player['id'] === $currentPlayer['id'];
